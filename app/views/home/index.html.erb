@@ -6,4 +6,6 @@
   <% if current_user.admin? %>
     There are <%= User.count %> users registered.
   <% end %>
+  <% else %>
+   <p class="text-muted display-8 text-center">Please login to use the features of our site.</p>
 <% end %>

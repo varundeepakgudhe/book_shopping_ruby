@@ -7,6 +7,10 @@ class User < ApplicationRecord
   enum role: [:user, :admin]
   after_initialize :set_default_role, :if => :new_record?
 
+  validates :name, :presence => true
+  validates :username, :presence => true, uniqueness: true
+
+
   private
   def set_default_role
     self.role ||= :user
