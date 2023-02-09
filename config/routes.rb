@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :reviews
+  resources :books
   resources :transactions
   devise_for :users, :controllers => { registrations: 'users/registrations' }
   get 'about', to: "about#index"
