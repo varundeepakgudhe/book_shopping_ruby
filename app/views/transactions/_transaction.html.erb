@@ -1,17 +1,26 @@
 <div id="<%= dom_id transaction %>">
-  <p>
+<!--  <p>
     <strong>Transaction no:</strong>
-    <%= transaction.transaction_no %>
+    <%#= transaction.transaction_no %>
   </p>
 
   <p>
     <strong>Quantity:</strong>
-    <%= transaction.quantity %>
+    <%#= transaction.quantity %>
   </p>
 
   <p>
     <strong>Total price:</strong>
-    <%= transaction.total_price %>
-  </p>
+    <%#= transaction.total_price %>
+  </p>-->
+  <tr>
+    <td><%= transaction.transaction_no %></td>
+    <td> </td>
+    <td><%= transaction.book_id %></td>
+    <td> </td>
+    <td><%= transaction.quantity %></td>
+    <td> </td>
+    <td><%= transaction.total_price %></td>
+  </tr>
 
 </div>
