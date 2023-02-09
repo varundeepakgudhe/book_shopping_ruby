@@ -5,10 +5,10 @@
 <div id="books">
 
   <%= form_with(url: books_path, method: "get") do %>
-    <%#= label_tag(:rating, "Rating: ") %>
-    <%#= text_field_tag(:rating) %>
-    <%= label_tag(:author, "Search by author: ") %>
-    <%= text_field_tag(:author) %>
+    <%= label_tag(:rating, "Rating: ") %>
+    <%= text_field_tag(:rating, params[:rating], class: "m-4") %>
+    <%= label_tag(:author, "Author: ") %>
+    <%= text_field_tag(:author, params[:author]) %>
     <%= submit_tag("Filter") %>
   <% end %>
 

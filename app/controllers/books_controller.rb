@@ -3,15 +3,17 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
+    @books = Book.all
+    if params[:rating] and params[:rating] != ""
+      @rating = Integer(params[:rating])
+      @books = @books.select{|book| book.average_rating >= @rating}
+      puts "here"
+      puts @books
+    end
 
-
-    if params[:author]
-
+    if params[:author] and params[:author] != ""
       @author = params[:author]
-      @books = Book.where(author: @author)
-
-    else
-      @books = Book.all
+      @books = @books.select{|book| book.author==@author}
     end
 
   end
