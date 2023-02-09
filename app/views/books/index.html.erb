@@ -3,6 +3,16 @@
 <h1>Books</h1>
 
 <div id="books">
+
+  <%= form_with(url: books_path, method: "get") do %>
+    <%#= label_tag(:rating, "Rating: ") %>
+    <%#= text_field_tag(:rating) %>
+    <%= label_tag(:author, "Search by author: ") %>
+    <%= text_field_tag(:author) %>
+    <%= submit_tag("Filter") %>
+  <% end %>
+
+
   <% @books.each do |book| %>
     <%= render book %>
     <p>
