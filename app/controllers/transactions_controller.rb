@@ -18,6 +18,10 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction = Transaction.new
+    if @book.nil?
+      @book = Book.find(params[:book_id])
+    end
+
   end
 
   # GET /transactions/1/edit
@@ -27,17 +31,33 @@ class TransactionsController < ApplicationController
   # POST /transactions or /transactions.json
   def create
     @transaction = Transaction.new(transaction_params)
+    puts(transaction_params)
+    # We create the transaction number using a random string of length 10
+    @transaction.transaction_no = Array.new(10){[*"A".."Z", *"0".."9"].sample}.join
+    @book = Book.find(params[:transaction][:book_id])
+    # We link the transaction to the current user and their credit card
+    @transaction.user = current_user # insert the correct call to an appropriate function here
+    # We update the original product quantity
+    @book.stock = @book.stock - @transaction.quantity
+    @book.save
+    @transaction.book = @book
+    binding.irb
+    if @transaction.save
 
-    respond_to do |format|
-      if @transaction.save
-        format.html { redirect_to transaction_url(@transaction), notice: "Transaction was successfully created." }
-        format.json { render :show, status: :created, location: @transaction }
+        redirect_to @book, notice: "Transaction was successfully created."
+
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+        render :new
+
       end
-    end
+
   end
+
+  # Only allow a list of trusted parameters through.
+  def transaction_params
+    params.require(:transaction).permit(:quantity, :total_price, :book_id, :user_id)
+  end
+
 
   # PATCH/PUT /transactions/1 or /transactions/1.json
   def update

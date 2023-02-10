@@ -7,4 +7,6 @@
   <%= link_to "Back to books", books_path %>
 
   <%= button_to "Destroy this book", @book, method: :delete %>
+
+  <%= link_to_if @book.stock > 0, 'Purchase this product', new_transaction_path(:book_id => @book.id) %>
 </div>
