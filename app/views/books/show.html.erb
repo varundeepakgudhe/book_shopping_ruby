@@ -10,6 +10,11 @@
 
   <%= link_to "Write a review for this book", new_book_review_path(@book), class: "btn btn-primary mb-4" %>
 
+  <%= form_with(url: book_path(@book), method: "get") do %>
+    <%= label_tag(:username, "username:" ) %>
+    <%= text_field_tag(:username, params[:username], class: "m-4") %>
+    <%= submit_tag("Filter") %>
+  <% end %>
 
   <% if @reviews.count > 0 %>
     <h4>All Reviews</h4>

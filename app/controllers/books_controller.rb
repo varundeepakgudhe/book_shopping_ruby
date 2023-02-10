@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, :except => [:index, :show ]
 
   # GET /books or /books.json
   def index
@@ -21,6 +22,11 @@ class BooksController < ApplicationController
   # GET /books/1 or /books/1.json
   def show
     @reviews = Book.find_by(id: params[:id]).reviews
+
+    if params[:username] and params[:username] != ""
+      @username = params[:username]
+      @reviews = @reviews.select{|review| review.user.username==@username}
+    end
   end
 
   # GET /books/new
