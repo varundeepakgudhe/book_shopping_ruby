@@ -42,7 +42,6 @@ class TransactionsController < ApplicationController
     @book.stock = @book.stock - @transaction.quantity
     @book.save
     @transaction.book = @book
-    binding.irb
     if @transaction.save
 
         redirect_to @book, notice: "Transaction was successfully created."
