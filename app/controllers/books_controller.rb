@@ -20,7 +20,7 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
-
+    @reviews = Book.find_by(id: params[:id]).reviews
   end
 
   # GET /books/new

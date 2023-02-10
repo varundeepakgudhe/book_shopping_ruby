@@ -6,5 +6,26 @@
   <%= link_to "Edit this book", edit_book_path(@book) %> |
   <%= link_to "Back to books", books_path %>
 
-  <%= button_to "Destroy this book", @book, method: :delete %>
+  <%= button_to "Destroy this book", @book, method: :delete, class: "btn btn-warning mb-4 mt-4" %>
+
+  <%= link_to "Write a review for this book", new_book_review_path(@book), class: "btn btn-primary mb-4" %>
+
+
+  <% if @reviews.count > 0 %>
+    <h4>All Reviews</h4>
+    <% @reviews.each do |review| %>
+      <hr>
+      <div class="mb-2">
+        <b><%= review.user.username %></b>
+        <div>
+          <div>
+            Rating: <%= review.rating %>
+          </div>
+          <div>
+            Review: <%= review.review %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 </div>
