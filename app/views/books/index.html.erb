@@ -1,5 +1,6 @@
 <p style="color: green"><%= notice %></p>
-
+<% if current_user %>
+  <%= link_to 'View all transactions', transactions_path %>
 <h1>Books</h1>
 
 <div id="books">
@@ -22,3 +23,6 @@
 </div>
 
 <%= link_to "New book", new_book_path %>
+<% else %>
+  <p class="text-muted display-8 text-center">Please login to use the features of our site.</p>
+<% end %>
