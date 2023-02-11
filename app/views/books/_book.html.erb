@@ -1,37 +1,23 @@
-<div id="<%= dom_id book %>">
-  <p>
-    <strong>Id:</strong>
-    <%= book.id %>
-  </p>
 
-  <p>
-    <strong>Name:</strong>
-    <%= book.name %>
-  </p>
 
-  <p>
-    <strong>Author:</strong>
-    <%= book.author %>
-  </p>
+<div class="card" id="<%= dom_id book %>">
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h5 class="card-title"><%= book.name %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><strong>Author: </strong><%= book.author %></h6>
+        <h6 class="card-subtitle mb-2 text-muted"><strong>Publisher: </strong><%= book.publisher %></h6>
+        <h6 class="card-subtitle mb-2 text-muted"><strong>Price: </strong><%= book.price %></h6>
+        <h6 class="card-subtitle mb-2 text-muted"><strong>Stock: </strong><%= book.stock %></h6>
+      </div>
 
-  <p>
-    <strong>Publisher:</strong>
-    <%= book.publisher %>
-  </p>
+      <div>
+        <h6 class="card-subtitle mb-2 text-muted"><strong>Average Rating: </strong><%= book.average_rating.round(1) %></h6>
+        <% if book.stock == 0 %>
+          <button class="btn btn-outline-danger">Out of stock</button>
+        <% end %>
+      </div>
+    </div>
 
-  <p>
-    <strong>Price:</strong>
-    <%= book.price %>
-  </p>
-
-  <p>
-    <strong>Stock:</strong>
-    <%= book.stock %>
-  </p>
-
-  <p>
-    <strong>Average Rating:</strong>
-    <%= book.average_rating.round(1) %>
-  </p>
-
+  </div>
 </div>

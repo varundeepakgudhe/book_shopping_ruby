@@ -3,23 +3,36 @@
 <%= render @book %>
 
 <div>
-  <%= link_to_if @book.stock > 0, 'Purchase this product', new_transaction_path(:book_id => @book.id) %>
+  <div class="d-flex justify-content-between">
+   <div class="d-flex flex-row align-items-center justify-content-between">
+     <%= link_to_if @book.stock > 0, 'Purchase this book', new_transaction_path(:book_id => @book.id), class: "btn btn-outline-primary my-2 mx-2" %>
+     <%= link_to "Back to books", books_path, class: "btn btn-outline-primary my-2 mx-2"%>
+   </div>
+
+    <div class="d-flex flex-row align-items-center justify-content-between">
+      <%= link_to "Edit this book", edit_book_path(@book), class: "btn btn-outline-primary my-2 mx-2"%>
+      <%= button_to "Destroy this book", @book, method: :delete, class: "btn btn-outline-danger my-4  mx-2" %>
+    </div>
+  </div>
   <br>
-  <%= link_to "Edit this book", edit_book_path(@book) %> |
-  <%= link_to "Back to books", books_path %>
+  <%= link_to "Write a review for this book", new_book_review_path(@book), class: "btn btn-outline-secondary mb-4" %>
 
-  <%= button_to "Destroy this book", @book, method: :delete, class: "btn btn-warning mb-4 mt-4" %>
-
-  <%= link_to "Write a review for this book", new_book_review_path(@book), class: "btn btn-primary mb-4" %>
-
-  <%= form_with(url: book_path(@book), method: "get") do %>
-    <%= label_tag(:username, "username:" ) %>
-    <%= text_field_tag(:username, params[:username], class: "m-4") %>
-    <%= submit_tag("Filter") %>
-  <% end %>
+  <div class="card my-4">
+    <div class="card-body">
+      <h4 class="card-title">
+        Filter by username
+      </h4>
+      <%= form_with(url: book_path(@book), method: "get") do %>
+        <div class="d-flex">
+          <%= text_field_tag(:username, params[:username], class: "form-control") %>
+          <%= submit_tag("Filter", class: "btn btn-warning mx-2") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
   <% if @reviews.count > 0 %>
-    <h4>All Reviews</h4>
+    <h4>Reviews</h4>
     <% @reviews.each do |review| %>
       <hr>
       <div class="mb-2">
@@ -34,6 +47,8 @@
         </div>
       </div>
     <% end %>
+    <% else %>
+    <h4>No Reviews</h4>
   <% end %>
 
 </div>

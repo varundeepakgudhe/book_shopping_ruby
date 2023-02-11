@@ -1,28 +1,44 @@
 <p style="color: green"><%= notice %></p>
-<% if current_user %>
-  <%= link_to 'View all transactions', transactions_path %>
-<h1>Books</h1>
 
+<% if current_user %>
+<div class="row">
+  <div class="col-12 col-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <%= form_with(url: books_path, method: "get") do %>
+          <%= label_tag(:rating, "Rating: ", class: "form-label") %>
+          <%= text_field_tag(:rating, params[:rating], class: "form-control") %>
+          <%= label_tag(:author, "Author: ", class: "form-label") %>
+          <%= text_field_tag(:author, params[:author], class: "form-control") %>
+          <%= submit_tag("Filter", class:"btn btn-warning mt-2 mb-2") %>
+        <% end %>
+      </div>
+    </div>
+    <%= link_to 'View all transactions', transactions_path, class: "btn btn-outline-primary w-100 mt-2 mb-2" %>
+    <%= link_to "Add a new book", new_book_path, class: "btn btn-outline-primary w-100 mt-2 mb-2"%>
+  </div>
+
+  <div class="col-12 col-lg-9">
+    <% if @books.count == 0 %>
+      <h5>No books Yet!</h5>
+    <% end %>
+    <% @books.each do |book| %>
+      <%= render book %>
+
+      <%= link_to "Show this book", book, class: "btn btn-outline-dark my-2" %>
+    <% end %>
+
+
+  </div>
+
+  </div>
+
+</div>
 <div id="books">
 
-  <%= form_with(url: books_path, method: "get") do %>
-    <%= label_tag(:rating, "Rating: ") %>
-    <%= text_field_tag(:rating, params[:rating], class: "m-4") %>
-    <%= label_tag(:author, "Author: ") %>
-    <%= text_field_tag(:author, params[:author]) %>
-    <%= submit_tag("Filter") %>
-  <% end %>
 
 
-  <% @books.each do |book| %>
-    <%= render book %>
-    <p>
-      <%= link_to "Show this book", book %>
-    </p>
-  <% end %>
-</div>
 
-<%= link_to "New book", new_book_path %>
 <% else %>
   <p class="text-muted display-8 text-center">Please login to use the features of our site.</p>
 <% end %>

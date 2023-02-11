@@ -1,6 +1,6 @@
 class Book < ApplicationRecord
-  has_many :reviews
-  has_many :transactions
+  has_many :reviews, dependent: :destroy
+  has_many :transactions, dependent: :destroy
 
   def average_rating
     if self.reviews.size > 0

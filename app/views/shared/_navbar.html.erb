@@ -20,7 +20,7 @@
             <%= link_to current_user.email, edit_user_registration_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= button_to "Logout", destroy_user_session_path, method: :delete, class:"nav-link"%>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete, class:"nav-link text-white btn btn-dark"%>
           </li>
         <% else %>
           <li class="nav-item">
