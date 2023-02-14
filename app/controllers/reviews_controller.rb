@@ -56,11 +56,12 @@ class ReviewsController < ApplicationController
   # DELETE /reviews/1 or /reviews/1.json
   def destroy
     @review.destroy
-
-    respond_to do |format|
-      format.html { redirect_to book_path(@book), notice: "Review was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    puts "DELTE REVIEW"
+    redirect_to book_path(@book), notice: "Review was successfully destroyed."
+    # respond_to do |format|
+    #   format.html { redirect_to book_path(@book), notice: "Review was successfully destroyed." }
+    #   format.json { head :no_content }
+    # end
   end
 
   private

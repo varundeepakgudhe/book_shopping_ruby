@@ -9,10 +9,13 @@
      <%= link_to "Back to books", books_path, class: "btn btn-outline-primary my-2 mx-2"%>
    </div>
 
+    <% if current_user and current_user.admin? %>
     <div class="d-flex flex-row align-items-center justify-content-between">
       <%= link_to "Edit this book", edit_book_path(@book), class: "btn btn-outline-primary my-2 mx-2"%>
       <%= button_to "Destroy this book", @book, method: :delete, class: "btn btn-outline-danger my-4  mx-2" %>
     </div>
+    <% end %>
+
   </div>
   <br>
   <%= link_to "Write a review for this book", new_book_review_path(@book), class: "btn btn-outline-secondary mb-4" %>
@@ -44,6 +47,13 @@
           <div>
             Review: <%= review.review %>
           </div>
+          <% if current_user and ((review.user_id == current_user.id) or current_user.admin?) %>
+            <div class="d-flex justify-content-between">
+              <%= link_to "Edit review", edit_book_review_path(@book, review), class: "btn btn-outline-warning" %>
+              <%= button_to "Delete review", book_review_path(@book, review), method: :delete,  class: "btn btn-small btn-outline-danger"%>
+              <%#= button_to "Destroy this book", @book, method: :delete, class: "btn btn-outline-danger my-4  mx-2" %>
+            </div>
+          <% end %>
         </div>
       </div>
     <% end %>
