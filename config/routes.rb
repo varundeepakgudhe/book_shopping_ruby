@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'admin_books/index'
+  get 'admin_books/show'
+  get 'admin_books/new'
+  get 'admin_books/create'
+  get 'admin_books/edit'
+  get 'admin_books/update'
+  get 'admin_books/destroy'
   # get 'admin_reviews/index'
   # get 'admin_reviews/new'
   # get 'admin_reviews/create'
@@ -16,6 +23,8 @@ Rails.application.routes.draw do
   resources :admin_reviews, :path => "admin/reviews"
 
   resources :admin_users, :path => "admin/users"
+
+  resources :admin_books, :path => "admin/book"
 
   # get 'admin/users', to: "admin_users#index", as: "admin_users"
   # post 'admin/users', to: "admin_users#create", as: "admin_create_users"
