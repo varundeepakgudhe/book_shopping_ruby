@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_09_201342) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_09_210700) do
   create_table "books", force: :cascade do |t|
     t.string "name"
     t.string "author"
@@ -19,7 +19,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_201342) do
     t.integer "stock"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["id"], name: "index_books_on_id", unique: true
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -40,6 +39,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_201342) do
     t.float "total_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.integer "book_id", null: false
+    t.index ["book_id"], name: "index_transactions_on_book_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -62,4 +65,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_201342) do
 
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
+  add_foreign_key "transactions", "books"
+  add_foreign_key "transactions", "users"
 end
