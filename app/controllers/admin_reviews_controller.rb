@@ -25,7 +25,7 @@ class AdminReviewsController < ApplicationController
     if @review.save
       redirect_to admin_review_path(@review), notice: "Review created successfully"
     else
-      render :new, notice: "something went wrong"
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -34,11 +34,9 @@ class AdminReviewsController < ApplicationController
 
   def update
     if @review.update(review_params)
-      p "SDKLLKDJLK"
       redirect_to admin_review_path(@review), notice: "Review updated successfully"
     else
-      p "SADKFLKFDJLKDS"
-      render :edit, notice: "Something went wrong!"
+      render :edit, status: :unprocessable_entity
     end
   end
 

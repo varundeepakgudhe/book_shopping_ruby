@@ -21,7 +21,7 @@ class AdminUsersController < ApplicationController
     if @user.save
       redirect_to admin_users_path, notice: "New user created successfully!"
     else
-      render :new, notice: "Something went wrong!"
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -42,7 +42,7 @@ class AdminUsersController < ApplicationController
     if @user.update(user_params)
       redirect_to  admin_user_path(@user), notice: "User updated successfully!"
     else
-      render :edit, notice: "Something went wrong!"
+      render :edit, status: :unprocessable_entity
     end
   end
 
