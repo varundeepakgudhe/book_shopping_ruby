@@ -40,7 +40,7 @@ class AdminUsersController < ApplicationController
       params[:user].delete(:password_confirmation)
     end
     if @user.update(user_params)
-      redirect_to  admin_show_user_path(@user), notice: "User updated successfully!"
+      redirect_to  admin_user_path(@user), notice: "User updated successfully!"
     else
       render :edit, notice: "Something went wrong!"
     end
