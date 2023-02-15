@@ -1,2 +1,32 @@
-<h1>AdminReviews#index</h1>
-<p>Find me in app/views/admin_reviews/index.html.erb</p>
+<h1>Admin reviews</h1>
+
+<%= link_to "Create a review", new_admin_review_path, class: "btn btn-outline-primary" %>
+
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Review</th>
+    <th scope="col">Rating</th>
+    <th scope="col">User</th>
+    <th scope="col">Book</th>
+    <th scope="col">View</th>
+    <th scope="col">Edit</th>
+    <th scope="col">Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @reviews.each do |review| %>
+  <tr>
+    <th scope="row"><%= review.id %></th>
+    <td><%= review.review%></td>
+    <td><%= review.rating %></td>
+    <td><%= review.user.username %></td>
+    <td><%= review.book.name%></td>
+    <td><%= link_to "View", admin_review_path(review)%></td>
+    <td><%= link_to "Edit", edit_admin_review_path(review)%></td>
+    <td><%= button_to "delete", admin_review_path(review), method: :delete, data: { turbo_confirm: 'Are you sure?' }  %></td>
+  </tr>
+    <% end %>
+  </tbody>
+</table>

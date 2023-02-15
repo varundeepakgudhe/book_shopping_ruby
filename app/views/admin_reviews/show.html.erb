@@ -1,2 +1,10 @@
 <h1>AdminReviews#show</h1>
-<p>Find me in app/views/admin_reviews/show.html.erb</p>
+
+<%= render @review %>
+
+<div>
+  <%= link_to "Edit this review", edit_admin_review_path(@review) %> |
+  <%= link_to "Back to reviews", admin_reviews_path %>
+
+  <%= button_to "delete", admin_review_path(@review), method: :delete, data: { turbo_confirm: 'Are you sure?' }  %>
+</div>

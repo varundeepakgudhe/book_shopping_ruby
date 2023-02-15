@@ -1,4 +1,4 @@
-<%= form_with(model: [@book, review]) do |form| %>
+<%= form_with(model: review, url: admin_reviews_path) do |form| %>
   <% if review.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
@@ -11,15 +11,23 @@
     </div>
   <% end %>
 
-<!--  <div>-->
-    <%#= form.label :id, style: "display: block" %>
-    <%#= form.text_field :id %>
-<!--  </div>-->
+  <!--  <div>-->
+  <%#= form.label :id, style: "display: block" %>
+  <%#= form.text_field :id %>
+  <!--  </div>-->
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.select :user_id, User.all.collect { |user| [ user.username, user.id] }, include_blank: true, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :book_id, style: "display: block" %>
+    <%= form.select :book_id, Book.all.collect { |book| [ book.name, book.id] }, include_blank: true, required: true %>
+  </div>
 
   <div>
     <%= form.label :rating, style: "display: block" %>
     <%= form.number_field :rating, class:"form-control", min: 0, max: 5 %>
-
   </div>
 
   <div>

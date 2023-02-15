@@ -1,2 +1,10 @@
-<h1>AdminReviews#new</h1>
-<p>Find me in app/views/admin_reviews/new.html.erb</p>
+<h1>Create a new review</h1>
+
+<%= render "form", review: @review %>
+
+<br>
+
+<div>
+  <%= link_to "Back", admin_reviews_path %>
+</div>
+
