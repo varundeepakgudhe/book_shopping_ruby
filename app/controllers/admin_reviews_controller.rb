@@ -1,4 +1,6 @@
 class AdminReviewsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :is_admin_user?
   def index
   end
 

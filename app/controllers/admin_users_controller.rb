@@ -47,11 +47,7 @@ class AdminUsersController < ApplicationController
   end
 
   private
-  def is_admin_user?
-    if not current_user.admin?
-      redirect_to root_path, alert: "You are not authorized!"
-    end
-  end
+
 
   def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :address, :phone_number, :credit_card_number)
