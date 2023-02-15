@@ -10,10 +10,12 @@ class ReviewsController < ApplicationController
     @reviews = Review.all
 
     if params[:username] and params[:username] != ""
+      @username = params[:username].strip
       @reviews = @reviews.select { |review| review.user.username == params[:username]}
     end
 
     if params[:bookname] and params[:bookname] != ""
+      @bookname = params[:bookname].strip
       @reviews = @reviews.select { |review| review.book.name == params[:bookname]}
     end
   end

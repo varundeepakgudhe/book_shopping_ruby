@@ -28,5 +28,5 @@ Rails.application.routes.draw do
   get 'admin', to: "admin#home"
   get 'about', to: "about#index"
   devise_for :users, :controllers => { registrations: 'users/registrations' }
-  root 'books#index'
+  root 'home#index'
 end

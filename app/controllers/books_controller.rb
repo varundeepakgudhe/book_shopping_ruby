@@ -12,7 +12,7 @@ class BooksController < ApplicationController
     end
 
     if params[:author] and params[:author] != ""
-      @author = params[:author]
+      @author = params[:author].strip
       @books = @books.select{|book| book.author==@author}
     end
 

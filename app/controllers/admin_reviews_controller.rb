@@ -4,6 +4,15 @@ class AdminReviewsController < ApplicationController
   before_action :set_review, except: [:index, :new]
   def index
     @reviews = Review.all
+    if params[:username] and params[:username] != ""
+      @username = params[:username].strip
+      @reviews = @reviews.select { |review| review.user.username == @username}
+    end
+
+    if params[:bookname] and params[:bookname] != ""
+      @bookname = params[:bookname].strip
+      @reviews = @reviews.select { |review| review.book.name == @bookname}
+    end
   end
 
   def new
