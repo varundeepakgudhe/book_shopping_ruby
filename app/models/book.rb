@@ -10,6 +10,7 @@ class Book < ApplicationRecord
 
 
 
+
   def average_rating
     if self.reviews.size > 0
       return self.reviews.average(:rating)

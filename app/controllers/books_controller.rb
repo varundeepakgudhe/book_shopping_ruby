@@ -8,12 +8,11 @@ class BooksController < ApplicationController
     if params[:rating] and params[:rating] != ""
       @rating = Integer(params[:rating])
       @books = @books.select{|book| book.average_rating >= @rating}
-      puts "here"
-      puts @books
+
     end
 
     if params[:author] and params[:author] != ""
-      @author = params[:author]
+      @author = params[:author].strip
       @books = @books.select{|book| book.author==@author}
     end
 
@@ -71,7 +70,7 @@ class BooksController < ApplicationController
     @book.destroy
 
     respond_to do |format|
-      format.html { redirect_to books_url, notice: "Book was successfully destroyed." }
+      format.html { redirect_to admin_books_path, notice: "Book was successfully destroyed." }
       format.json { head :no_content }
     end
   end

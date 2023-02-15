@@ -7,7 +7,21 @@
   <br>
   <% if current_user.admin? %>
     There are <%= User.count %> users registered.
+    <div>
+      <%= link_to "Admin Panel", admin_path %>
+    </div>
+    <% else %>
+    <div class="d-flex flex-column">
+      <%= link_to "Edit Profile", edit_user_registration_path %>
+      <%= link_to "My Transcations", transactions_path %>
+      <%= link_to "Reviews by Me", reviews_all_path(:username=>current_user.username) %>
+      <%= link_to "List/Search all reviews", reviews_all_path %>
+      <%= link_to "All Books", books_path %>
+    </div>
+
   <% end %>
+
+
   <% else %>
    <p class="text-muted display-8 text-center">Please login to use the features of our site.</p>
 <% end %>

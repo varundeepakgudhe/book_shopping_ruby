@@ -1,10 +1,10 @@
-class UsersController < ApplicationController
+class AdminUsersController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin_user?
 
   def destroy
     @user = User.find_by(id: params[:id]).destroy
-    redirect_to users_path, notice: "User deleted successfully!"
+    redirect_to admin_users_path, notice: "User deleted successfully!"
   end
 
   def show
@@ -19,9 +19,9 @@ class UsersController < ApplicationController
     p @user
     puts " I am herer adfsadf"
     if @user.save
-      redirect_to users_path, notice: "New user created successfully!"
+      redirect_to admin_users_path, notice: "New user created successfully!"
     else
-      render :new, notice: "Something went wrong!"
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -40,18 +40,14 @@ class UsersController < ApplicationController
       params[:user].delete(:password_confirmation)
     end
     if @user.update(user_params)
-      redirect_to  show_user_path(@user), notice: "User updated successfully!"
+      redirect_to  admin_user_path(@user), notice: "User updated successfully!"
     else
-      render :edit, notice: "Something went wrong!"
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
-  def is_admin_user?
-    if not current_user.admin?
-      redirect_to root_path, alert: "You are not authorized!"
-    end
-  end
+
 
   def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :address, :phone_number, :credit_card_number)

@@ -11,6 +11,7 @@ class User < ApplicationRecord
   after_initialize :set_default_role, :if => :new_record?
 
   validates :name, :presence => true
+  validates :email, :presence => true
   validates :username, :presence => true, uniqueness: true
 
 

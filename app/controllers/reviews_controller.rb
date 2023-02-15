@@ -1,13 +1,23 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: %i[ show edit update destroy ]
-  before_action :set_book
+  before_action :set_book, except: [:reviews_all]
   before_action :authenticate_user!
+
+
 
   # GET /reviews or /reviews.json
   def index
     @reviews = Review.all
 
+    if params[:username] and params[:username] != ""
+      @username = params[:username].strip
+      @reviews = @reviews.select { |review| review.user.username == params[:username]}
+    end
 
+    if params[:bookname] and params[:bookname] != ""
+      @bookname = params[:bookname].strip
+      @reviews = @reviews.select { |review| review.book.name == params[:bookname]}
+    end
   end
 
   # GET /reviews/1 or /reviews/1.json
@@ -56,7 +66,6 @@ class ReviewsController < ApplicationController
   # DELETE /reviews/1 or /reviews/1.json
   def destroy
     @review.destroy
-    puts "DELTE REVIEW"
     redirect_to book_path(@book), notice: "Review was successfully destroyed."
     # respond_to do |format|
     #   format.html { redirect_to book_path(@book), notice: "Review was successfully destroyed." }

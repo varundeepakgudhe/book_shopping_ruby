@@ -1,0 +1,2 @@
+module AdminBooksHelper
+end

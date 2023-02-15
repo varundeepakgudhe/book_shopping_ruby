@@ -1,15 +1,36 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Reviews</h1>
+<div class="card">
+  <div class="card-body">
+    <%= form_with(url: reviews_all_path, method: "get") do %>
+      <%= label_tag(:username, "Username: ", class: "form-label") %>
+      <%= text_field_tag(:username, params[:username], class: "form-control") %>
 
+      <%= submit_tag("Filter", class:"btn btn-warning mt-2 mb-2") %>
+    <% end %>
+
+    <%= form_with(url: reviews_all_path, method: "get") do %>
+
+      <%= label_tag(:bookname, "Book Name: ", class: "form-label") %>
+      <%= text_field_tag(:bookname, params[:bookname], class: "form-control") %>
+
+      <%= submit_tag("Filter", class:"btn btn-warning mt-2 mb-2") %>
+    <% end %>
+  </div>
+</div>
 
 <div id="reviews">
   <% @reviews.each do |review| %>
     <%= render review %>
     <p>
-      <%= link_to "Show this review", book_reviews_path(@book) %>
+      <%#= link_to "Show this review", book_reviews_path(@book) %>
     </p>
+  <% end %>
+
+  <% if @reviews.count == 0 %>
+    <h2> Nothing to show </h2>
   <% end %>
 </div>
 
-<%= link_to "New review", new_book_review_path(@book) %>
+<%#= link_to "New review", new_book_review_path(@book) %>

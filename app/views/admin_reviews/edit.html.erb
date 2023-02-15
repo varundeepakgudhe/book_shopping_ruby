@@ -1,0 +1,51 @@
+
+<h1>Editing review</h1>
+
+<%= form_with(model: @review, url: admin_review_path) do |form| %>
+  <% if @review.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+        <% @review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!--  <div>-->
+  <%#= form.label :id, style: "display: block" %>
+  <%#= form.text_field :id %>
+  <!--  </div>-->
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.select :user_id, User.all.collect { |user| [ user.username, user.id] }, include_blank: true, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :book_id, style: "display: block" %>
+    <%= form.select :book_id, Book.all.collect { |book| [ book.name, book.id] }, include_blank: true, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :rating, style: "display: block" %>
+    <%= form.number_field :rating, class:"form-control", min: 0, max: 5 %>
+  </div>
+
+  <div>
+    <%= form.label :review, style: "display: block" %>
+    <%= form.text_area :review, class:"form-control" %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit", class:"btn btn-outline-primary my-2"%>
+  </div>
+<% end %>
+
+
+<br>
+
+<div>
+  <%= link_to "Back", admin_review_path(@review) %>
+</div>
