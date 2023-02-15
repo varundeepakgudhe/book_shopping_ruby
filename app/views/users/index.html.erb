@@ -15,16 +15,20 @@
     </thead>
     <tbody>
     <% @users.each do |user| %>
-    <% if not user.role == "admin"%>
+
       <tr>
         <th scope="row"><%= user.id %></th>
         <td><%= user.email%></td>
         <td><%= user.username%></td>
         <td><%= link_to "view", show_user_path(user.id) %></td>
         <td><%= link_to "edit", edit_user_path(user) %></td>
-        <td><%= button_to "delete", delete_user_path(user), method: :delete, data: { turbo_confirm: 'Are you sure?' }  %></td>
+        <% if not user.role == "admin"%>
+          <td><%= button_to "delete", delete_user_path(user), method: :delete, data: { turbo_confirm: 'Are you sure?' }  %></td>
+          <% else %>
+          <td><%= button_to "delete", delete_user_path(user), method: :delete,disabled:true, data: { turbo_confirm: 'Are you sure?' }  %></td>
+        <% end %>
+
       </tr>
-    <% end %>
     <% end %>
     </tbody>
   </table>
