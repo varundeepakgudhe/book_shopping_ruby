@@ -1,13 +1,21 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: %i[ show edit update destroy ]
-  before_action :set_book
+  before_action :set_book, except: [:reviews_all]
   before_action :authenticate_user!
+
+
 
   # GET /reviews or /reviews.json
   def index
     @reviews = Review.all
 
+    if params[:username] and params[:username] != ""
+      @reviews = @reviews.select { |review| review.user.username == params[:username]}
+    end
 
+    if params[:bookname] and params[:bookname] != ""
+      @reviews = @reviews.select { |review| review.book.name == params[:bookname]}
+    end
   end
 
   # GET /reviews/1 or /reviews/1.json

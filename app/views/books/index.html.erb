@@ -7,10 +7,15 @@
       <div class="card-body">
         <%= form_with(url: books_path, method: "get") do %>
           <%= label_tag(:rating, "Rating: ", class: "form-label") %>
-          <%= text_field_tag(:rating, params[:rating], class: "form-control") %>
+          <%= number_field_tag(:rating, params[:rating], class: "form-control", min: 0, max: 5) %>
+
+          <%= submit_tag("Filter by rating", class:"btn btn-warning mt-2 mb-2") %>
+        <% end %>
+        <%= form_with(url: books_path, method: "get") do %>
+
           <%= label_tag(:author, "Author: ", class: "form-label") %>
           <%= text_field_tag(:author, params[:author], class: "form-control") %>
-          <%= submit_tag("Filter", class:"btn btn-warning mt-2 mb-2") %>
+          <%= submit_tag("Filter by author", class:"btn btn-warning mt-2 mb-2") %>
         <% end %>
       </div>
     </div>

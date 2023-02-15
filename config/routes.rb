@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-  get 'admin_reviews/index'
-  get 'admin_reviews/new'
-  get 'admin_reviews/create'
-  get 'admin_reviews/edit'
-  get 'admin_reviews/update'
-  get 'admin_reviews/destroy'
-  get 'admin_reviews/show'
-  get 'admin/home'
+  # get 'admin_reviews/index'
+  # get 'admin_reviews/new'
+  # get 'admin_reviews/create'
+  # get 'admin_reviews/edit'
+  # get 'admin_reviews/update'
+  # get 'admin_reviews/destroy'
+  # get 'admin_reviews/show'
+  # get 'admin/home'
 
   resources :books do
     resources :reviews
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   # get 'admin/users/:id/edit', to: "admin_users#edit", as: "admin_edit_user"
   # put 'admin/users/:id/update', to: "admin_users#update", as: "admin_update_user"
   # delete 'admin/users/:id', to: "admin_users#destroy", as: "admin_delete_user"
-
+  get 'reviews/all', to: "reviews#index"
   get 'admin', to: "admin#home"
   get 'about', to: "about#index"
   devise_for :users, :controllers => { registrations: 'users/registrations' }

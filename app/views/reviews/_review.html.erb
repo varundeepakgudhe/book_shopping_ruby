@@ -1,17 +1,28 @@
 <div id="<%= dom_id review %>">
-  <p>
-    <strong>Id:</strong>
-    <%= review.id %>
-  </p>
 
-  <p>
-    <strong>Rating:</strong>
-    <%= review.rating %>
-  </p>
 
-  <p>
-    <strong>Review:</strong>
-    <%= review.review %>
-  </p>
+  <div class="card">
+    <div class="card-body">
+      <p>
+        <strong>Rating:</strong>
+        <%= review.rating %>
+      </p>
 
+      <p>
+        <strong>Review:</strong>
+        <%= review.review %>
+      </p>
+
+      <p>
+        <strong>User:</strong>
+        <%= review.user.username %>
+      </p>
+
+      <p>
+        <strong>Book:</strong>
+        <%= review.book.name %>
+      </p>
+
+    </div>
+  </div>
 </div>

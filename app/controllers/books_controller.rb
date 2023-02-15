@@ -8,8 +8,7 @@ class BooksController < ApplicationController
     if params[:rating] and params[:rating] != ""
       @rating = Integer(params[:rating])
       @books = @books.select{|book| book.average_rating >= @rating}
-      puts "here"
-      puts @books
+
     end
 
     if params[:author] and params[:author] != ""
