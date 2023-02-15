@@ -1,10 +1,10 @@
-class UsersController < ApplicationController
+class AdminUsersController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin_user?
 
   def destroy
     @user = User.find_by(id: params[:id]).destroy
-    redirect_to users_path, notice: "User deleted successfully!"
+    redirect_to admin_users_path, notice: "User deleted successfully!"
   end
 
   def show
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     p @user
     puts " I am herer adfsadf"
     if @user.save
-      redirect_to users_path, notice: "New user created successfully!"
+      redirect_to admin_users_path, notice: "New user created successfully!"
     else
       render :new, notice: "Something went wrong!"
     end
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
       params[:user].delete(:password_confirmation)
     end
     if @user.update(user_params)
-      redirect_to  show_user_path(@user), notice: "User updated successfully!"
+      redirect_to  admin_show_user_path(@user), notice: "User updated successfully!"
     else
       render :edit, notice: "Something went wrong!"
     end
