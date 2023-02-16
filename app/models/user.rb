@@ -13,6 +13,10 @@ class User < ApplicationRecord
   validates :name, :presence => true
   validates :email, :presence => true
   validates :username, :presence => true, uniqueness: true
+  validates :address, length: {minimum: 1, maximum: 10000}
+  validates :credit_card_number, format: { with: /\A\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\z/, message: "Invalid credit card number" }
+  validates :phone_number, format: { with: /\A\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})\z/, message: "Invalid phone number" }
+
 
 
   private
