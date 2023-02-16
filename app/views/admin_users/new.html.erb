@@ -1,3 +1,4 @@
+<div class="w-50 mx-auto">
 <h2>Create User</h2>
 
 <%= form_with(model: @user, url: admin_users_path) do |f| %>
@@ -50,4 +51,4 @@
     <%= f.submit "Sign up", data: { turbo: false }, class: "btn btn-primary mb-4"%>
   </div>
 <% end %>
-
+</div>

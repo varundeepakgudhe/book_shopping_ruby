@@ -1,4 +1,7 @@
+<div class="w-50 mx-auto">
 <h2>Edit <%= @user.email %></h2>
+
+
 
 <%= form_with(model: @user, url: admin_user_path(@user), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: @user %>
@@ -68,3 +71,4 @@
   <p>Unhappy? <%= button_to "Cancel my account", admin_user_path(@user), data: { turbo_confirm: 'Are you sure?' }, method: :delete, class: "btn btn-warning" %></p>
 <% end %>
 <%= link_to "Back", :back %>
+</div>

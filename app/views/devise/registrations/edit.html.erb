@@ -1,73 +1,76 @@
-<h2>Edit <% if current_user.admin? %>Admin <% end %><%= resource_name.to_s.humanize %></h2>
+<div class="w-50 mx-auto">
+  <h2>Edit <% if current_user.admin? %>Admin <% end %><%= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control mb-4" %>
-  </div>
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control mb-4" %>
+    </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+    <div class="field">
+      <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+      <%= f.password_field :current_password, autocomplete: "current-password" , class: "form-control mb-4"%>
+    </div>
+    <% if not current_user.admin? %>
+      <div class="field">
+        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control mb-4" %>
+        <% if @minimum_password_length %>
+          <br />
+          <em><%= @minimum_password_length %> characters minimum</em>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control mb-4" %>
+      </div>
+
+
+
+      <div class="field">
+        <%= f.label :username %><br />
+        <%= f.text_field :username, autocomplete: "pick a username", class: "form-control mb-4"%>
+      </div>
+
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name, autocomplete: "your name", class: "form-control mb-4"%>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :address %><br />
+      <%= f.text_area :address, autocomplete: "your address", class: "form-control mb-4"%>
+    </div>
+
+    <div class="field">
+      <%= f.label :phone_number %><br />
+      <%= f.text_field :phone_number, autocomplete: "your phone number", class: "form-control mb-4"%>
+    </div>
+
+    <div class="field">
+      <%= f.label :credit_card_number %><br />
+      <%= f.text_field :credit_card_number, autocomplete: "credit card number", class: "form-control mb-4"%>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Update", data:{ turbo: false },class: "btn btn-primary mb-4"%>
+    </div>
   <% end %>
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" , class: "form-control mb-4"%>
-  </div>
+
   <% if not current_user.admin? %>
-    <div class="field">
-      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-      <%= f.password_field :password, autocomplete: "new-password", class: "form-control mb-4" %>
-      <% if @minimum_password_length %>
-        <br />
-        <em><%= @minimum_password_length %> characters minimum</em>
-      <% end %>
-    </div>
-
-    <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control mb-4" %>
-    </div>
-
-
-
-    <div class="field">
-      <%= f.label :username %><br />
-      <%= f.text_field :username, autocomplete: "pick a username", class: "form-control mb-4"%>
-    </div>
-
+    <h3>Cancel my account</h3>
+    <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { turbo_confirm: 'Are you sure?' }, method: :delete, class: "btn btn-warning" %></p>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autocomplete: "your name", class: "form-control mb-4"%>
-  </div>
+  <%= link_to "Back", :back %>
 
-
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_area :address, autocomplete: "your address", class: "form-control mb-4"%>
-  </div>
-
-  <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.text_field :phone_number, autocomplete: "your phone number", class: "form-control mb-4"%>
-  </div>
-
-  <div class="field">
-    <%= f.label :credit_card_number %><br />
-    <%= f.text_field :credit_card_number, autocomplete: "credit card number", class: "form-control mb-4"%>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update", data:{ turbo: false },class: "btn btn-primary mb-4"%>
-  </div>
-<% end %>
-
-<% if not current_user.admin? %>
-  <h3>Cancel my account</h3>
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { turbo_confirm: 'Are you sure?' }, method: :delete, class: "btn btn-warning" %></p>
-<% end %>
-
-<%= link_to "Back", :back %>
+</div>
