@@ -14,8 +14,8 @@ class User < ApplicationRecord
   validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: "Invalid email address" }
   validates :username, :presence => true, uniqueness: true
   validates :address,:allow_blank => true,  length: {minimum: 1, maximum: 10000}
-  validates :credit_card_number,:allow_blank => true, format: { with: /\A\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\z/, message: "Invalid credit card number [ must be 16 digits ]" }
-  validates :phone_number, :allow_blank => true, format: { with: /\A\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})\z/, message: "Invalid phone number [ must be 10 digits ]" }
+  validates :credit_card_number,:allow_blank => true, format: { with: /\A\d{16}\z/, message: "Invalid credit card number [ must be 16 digits ]" }
+  validates :phone_number, :allow_blank => true, format: { with: /\A[0-9]{10}\Z/, message: "Invalid phone number [ must be 10 digits ]" }
 
 
 
