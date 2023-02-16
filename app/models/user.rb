@@ -11,7 +11,7 @@ class User < ApplicationRecord
   after_initialize :set_default_role, :if => :new_record?
 
   validates :name, :presence => true
-  validates :email, :presence => true
+  validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: "Invalid email address" }
   validates :username, :presence => true, uniqueness: true
   validates :address, length: {minimum: 1, maximum: 10000}
   validates :credit_card_number, format: { with: /\A\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\z/, message: "Invalid credit card number" }
