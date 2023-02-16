@@ -43,6 +43,10 @@ class TransactionsController < ApplicationController
     @book.stock = @book.stock - @transaction.quantity
     @book.save
     @transaction.book = @book
+    @transaction.phoneno = params[:transaction][:phone_number]
+    @transaction.creditcard = params[:transaction][:credit_card]
+    @transaction.address = params[:transaction][:address]
+
     if @transaction.save
 
         redirect_to @book, notice: "Transaction was successfully created."
@@ -56,7 +60,7 @@ class TransactionsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def transaction_params
-    params.require(:transaction).permit(:quantity, :total_price, :book_id, :user_id)
+    params.require(:transaction).permit(:quantity, :total_price, :credit_card,:address,:phone_number,:book_id, :user_id)
   end
 
 
