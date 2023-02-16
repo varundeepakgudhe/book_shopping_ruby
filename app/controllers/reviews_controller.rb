@@ -2,6 +2,7 @@ class ReviewsController < ApplicationController
   before_action :set_review, only: %i[ show edit update destroy ]
   before_action :set_book, except: [:reviews_all]
   before_action :authenticate_user!
+  before_action :check_authorization, only: [:edit, :update, :destroy]
 
 
 
@@ -32,6 +33,7 @@ class ReviewsController < ApplicationController
 
   # GET /reviews/1/edit
   def edit
+
   end
 
   # POST /reviews or /reviews.json
@@ -86,4 +88,10 @@ class ReviewsController < ApplicationController
     def review_params
       params.require(:review).permit(:id, :rating, :review)
     end
+
+  def check_authorization
+    if not current_user.admin? and not @review.user.id == current_user.id
+      redirect_to root_path, alert: "You are not authorized for that action!"
+    end
+  end
 end
