@@ -32,38 +32,37 @@ class TransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
-    @transaction = Transaction.new(transaction_params)
-    puts(transaction_params)
-    # We create the transaction number using a random string of length 10
-    @transaction.transaction_no = Array.new(10){[*"A".."Z", *"0".."9"].sample}.join
-    # We link the transaction to the current user and their credit card
-    @transaction.user = current_user # insert the correct call to an appropriate function here
-
     @book = Book.find(params[:transaction][:book_id])
-    # We update the original product quantity
     @book.with_lock do
-      @remaining_stock = @book.stock - @transaction.quantity
-      if @remaining_stock >= 0
-          @book.stock = @remaining_stock
-          @book.save
-      else
-        redirect_to @book, alert: "You missed it, no stock left."
-      end
+      @transaction = Transaction.new(transaction_params)
+      puts(transaction_params)
+      # We create the transaction number using a random string of length 10
+      @transaction.transaction_no = Array.new(10){[*"A".."Z", *"0".."9"].sample}.join
+      # We link the transaction to the current user and their credit card
+      @transaction.user = current_user # insert the correct call to an appropriate function here
+
+      # We update the original product quantity
+        @remaining_stock = @book.stock - @transaction.quantity
+        if @remaining_stock >= 0
+            @book.stock = @remaining_stock
+            @book.save
+        else
+          return redirect_to @book, alert: "You missed it, no stock left."
+        end
+      @transaction.book = @book
+      @transaction.phoneno = params[:transaction][:phone_number]
+      @transaction.creditcard = params[:transaction][:credit_card]
+      @transaction.address = params[:transaction][:address]
+
+      if @transaction.save
+
+          redirect_to @book, notice: "Transaction was successfully created."
+
+        else
+          render :new
+
+        end
     end
-    @transaction.book = @book
-    @transaction.phoneno = params[:transaction][:phone_number]
-    @transaction.creditcard = params[:transaction][:credit_card]
-    @transaction.address = params[:transaction][:address]
-
-    if @transaction.save
-
-        redirect_to @book, notice: "Transaction was successfully created."
-
-      else
-        render :new
-
-      end
-
   end
 
   # Only allow a list of trusted parameters through.
