@@ -36,12 +36,20 @@ class TransactionsController < ApplicationController
     puts(transaction_params)
     # We create the transaction number using a random string of length 10
     @transaction.transaction_no = Array.new(10){[*"A".."Z", *"0".."9"].sample}.join
-    @book = Book.find(params[:transaction][:book_id])
     # We link the transaction to the current user and their credit card
     @transaction.user = current_user # insert the correct call to an appropriate function here
+
+    @book = Book.find(params[:transaction][:book_id])
     # We update the original product quantity
-    @book.stock = @book.stock - @transaction.quantity
-    @book.save
+    @book.with_lock do
+      @remaining_stock = @book.stock - @transaction.quantity
+      if @remaining_stock >= 0
+          @book.stock = @remaining_stock
+          @book.save
+      else
+        redirect_to @book, alert: "You missed it, no stock left."
+      end
+    end
     @transaction.book = @book
     @transaction.phoneno = params[:transaction][:phone_number]
     @transaction.creditcard = params[:transaction][:credit_card]
