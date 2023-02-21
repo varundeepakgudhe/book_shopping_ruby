@@ -23,9 +23,13 @@
 <div id="reviews">
   <% @reviews.each do |review| %>
     <%= render review %>
-    <p>
-      <%#= link_to "Show this review", book_reviews_path(@book) %>
-    </p>
+    <% if current_user and ((review.user_id == current_user.id) or current_user.admin?) %>
+      <div class="d-flex justify-content-between">
+        <%= link_to "Edit review", edit_book_review_path(review.book_id, review), class: "btn btn-outline-warning" %>
+        <%= button_to "Delete review", book_review_path(review.book_id, review), method: :delete,  class: "btn btn-small btn-outline-danger"%>
+        <%#= button_to "Destroy this book", @book, method: :delete, class: "btn btn-outline-danger my-4  mx-2" %>
+      </div>
+    <% end %>
   <% end %>
 
   <% if @reviews.count == 0 %>
