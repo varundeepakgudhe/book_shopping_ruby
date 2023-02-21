@@ -34,7 +34,12 @@
     <% end %>
     <% @books.each do |book| %>
       <%= render book %>
-
+      <!--     Adding Cart feature here-->
+      <%= form_with model: @order_item do |f| %>
+        <%= f.hidden_field :book_id, value: book.id %>
+        <%= f.number_field :quantity, value: 1, min: 1, max: book.stock %>
+        <%= f.submit "Add to Cart" %>
+      <% end %>
       <%= link_to "Show this book", book, class: "btn btn-outline-dark my-2" %>
     <% end %>
 

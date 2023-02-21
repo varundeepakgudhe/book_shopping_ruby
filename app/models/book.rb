@@ -1,6 +1,7 @@
 class Book < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :transactions, dependent: :destroy
+  has_many :order_items
 
   validates :name, presence: true,length: {minimum: 1, maximum: 1000}
   validates :author, presence: true, length: {minimum: 1, maximum: 1000}

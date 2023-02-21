@@ -32,8 +32,32 @@ class TransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
-    @book = Book.find(params[:transaction][:book_id])
-    @book.with_lock do
+    @transaction = Transaction.new(transaction_params)
+    @transaction.transaction_no = Array.new(10){[*"A".."Z", *"0".."9"].sample}.join
+
+    if Order.find(params[:transaction][:order_id]).nil?
+      @book = Book.find(params[:transaction][:book_id])
+      @book.with_lock do
+
+        puts(transaction_params)
+        # We create the transaction number using a random string of length 10
+
+        # We link the transaction to the current user and their credit card
+        @transaction.user = current_user # insert the correct call to an appropriate function here
+
+        # We update the original product quantity
+        @remaining_stock = @book.stock - @transaction.quantity
+        if @remaining_stock >= 0
+          @book.stock = @remaining_stock
+          @book.save
+        else
+          return redirect_to @book, alert: "You missed it, no stock left."
+        end
+        @transaction.book = @book
+
+      end
+    else
+      @order_items = Order.find(params[:transaction][:order_id])
       @transaction = Transaction.new(transaction_params)
       puts(transaction_params)
       # We create the transaction number using a random string of length 10
@@ -41,33 +65,37 @@ class TransactionsController < ApplicationController
       # We link the transaction to the current user and their credit card
       @transaction.user = current_user # insert the correct call to an appropriate function here
 
-      # We update the original product quantity
+      @order_items.each do |item|
+        @book = Book.find(item.book.id)
         @remaining_stock = @book.stock - @transaction.quantity
         if @remaining_stock >= 0
-            @book.stock = @remaining_stock
-            @book.save
+          @book.stock = @remaining_stock
+          @book.save
         else
           return redirect_to @book, alert: "You missed it, no stock left."
         end
-      @transaction.book = @book
-      @transaction.phoneno = params[:transaction][:phone_number]
-      @transaction.creditcard = params[:transaction][:credit_card]
-      @transaction.address = params[:transaction][:address]
+      end
 
-      if @transaction.save
-
-          redirect_to @book, notice: "Transaction was successfully created."
-
-        else
-          render :new
-
-        end
     end
+
+    @transaction.phoneno = params[:transaction][:phone_number]
+    @transaction.creditcard = params[:transaction][:credit_card]
+    @transaction.address = params[:transaction][:address]
+
+    if @transaction.save
+
+      redirect_to @book, notice: "Transaction was successfully created."
+
+    else
+      render :new
+
+    end
+
   end
 
   # Only allow a list of trusted parameters through.
   def transaction_params
-    params.require(:transaction).permit(:quantity, :total_price, :credit_card,:address,:phone_number,:book_id, :user_id)
+    params.require(:transaction).permit(:quantity, :total_price, :credit_card,:address,:phone_number,:book_id, :user_id,:order_id)
   end
 
 
