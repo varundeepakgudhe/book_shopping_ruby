@@ -6,7 +6,7 @@ class Book < ApplicationRecord
   validates :author, presence: true, length: {minimum: 1, maximum: 1000}
   validates :publisher, presence: true,length: {minimum: 1, maximum: 1000}
   validates :stock, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0}
-  validates :price, presence: true, numericality: {allow_float: true, greater_than_or_equal_to: 0}
+  validates :price, presence: true, numericality: {allow_float: true, greater_than_or_equal_to: 0.0}
 
 
 

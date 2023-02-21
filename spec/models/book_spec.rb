@@ -1,41 +1,45 @@
 # describe Book do
   # tests go here
 # end
+#
+# $LOAD_PATH.unshift('/Users/varundeepakgudhe/.rvm/gems/ruby-3.0.2/gems/factory_bot_rails-6.2.0/lib/factory_bot_rails.rb
+# ')
+
 require 'rails_helper'
 require 'spec_helper'
+# require '/Users/varundeepakgudhe/.rvm/gems/ruby-3.0.2/gems/factory_bot_rails-6.2.0/lib/factory_bot_rails.rb'
 require 'factory_bot_rails'
 require 'rails_helper'
 
+
+
 RSpec.describe Book, type: :model do
-  it "is valid with name, author, publisher, stock, and price" do
-    book = Book.new(name: "Book Name", author: "Author Name", publisher: "Publisher Name", stock: 10, price: 9.99)
-    expect(book).to be_valid
+  describe "attributes" do
+    it { should respond_to(:name) }
+    it { should respond_to(:author) }
+    it { should respond_to(:publisher) }
+    it { should respond_to(:stock) }
+    it { should respond_to(:price) }
   end
 
-  it "is not valid without a name" do
-    book = Book.new(author: "Author Name", publisher: "Publisher Name", stock: 10, price: 9.99)
-    expect(book).not_to be_valid
+  describe "validations" do
+    subject {FactoryBot.build(:book)}
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:author) }
+    it { should validate_presence_of(:publisher) }
+    it { should validate_presence_of(:stock) }
+    it { should validate_presence_of(:price) }
+
+    it { should validate_numericality_of(:stock).only_integer.is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0.0) }
   end
 
-  it "is not valid without an author" do
-    book = Book.new(name: "Book Name", publisher: "Publisher Name", stock: 10, price: 9.99)
-    expect(book).not_to be_valid
+  describe "associations" do
+    # add any associations tests here if necessary
   end
 
-  it "is not valid without a publisher" do
-    book = Book.new(name: "Book Name", author: "Author Name", stock: 10, price: 9.99)
-    expect(book).not_to be_valid
-  end
-
-  it "is not valid without a stock" do
-    book = Book.new(name: "Book Name", author: "Author Name", publisher: "Publisher Name", price: 9.99)
-    expect(book).not_to be_valid
-  end
-
-  it "is not valid without a price" do
-    book = Book.new(name: "Book Name", author: "Author Name", publisher: "Publisher Name", stock: 10)
-    expect(book).not_to be_valid
+  describe "methods" do
+    # add any methods tests here if necessary
   end
 end
-
 
