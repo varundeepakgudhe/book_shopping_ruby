@@ -29,17 +29,20 @@ RSpec.describe Book, type: :model do
     it { should validate_presence_of(:publisher) }
     it { should validate_presence_of(:stock) }
     it { should validate_presence_of(:price) }
-
+    it { should validate_length_of(:name).is_at_least(1).is_at_most(1000) }
+    it { should validate_length_of(:author).is_at_least(1).is_at_most(1000) }
+    it { should validate_length_of(:publisher).is_at_least(1).is_at_most(1000) }
     it { should validate_numericality_of(:stock).only_integer.is_greater_than_or_equal_to(0) }
     it { should validate_numericality_of(:price).is_greater_than_or_equal_to(0.0) }
   end
 
   describe "associations" do
-    # add any associations tests here if necessary
+    it { should have_many(:reviews).dependent(:destroy) }
+    it { should have_many(:transactions).dependent(:destroy) }
+
   end
 
-  describe "methods" do
-    # add any methods tests here if necessary
-  end
+
+
 end
 
