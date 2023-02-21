@@ -35,6 +35,10 @@ class OrderItemsController < ApplicationController
     @order_items = current_order.order_items
   end
 
+  def delete
+    @order.destroy
+  end
+
   private
   def order_params
     params.require(:order_item).permit(:book_id, :quantity)

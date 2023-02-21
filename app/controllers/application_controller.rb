@@ -6,4 +6,7 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, alert: "You are not authorized!"
     end
   end
+  def reset_session
+    @_request.reset_session
+  end
 end

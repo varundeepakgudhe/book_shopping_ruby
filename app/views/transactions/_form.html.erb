@@ -10,23 +10,36 @@
       </ul>
     </div>
   <% end %>
+  <% if !@book.nil? %>
+    <p>You are purchasing the product: <%= @book.name %></p>
 
-  <p>You are purchasing the product: <%= @book.name %></p>
+    <div class="field">
+      <% qty = @book.stock %>
+      <%= form.label :quantity %>
+      <%= form.number_field :quantity, :id => 'quantity', required: true, min: 1, max: qty, onchange: "calculateTotalPrice();", class: "form-control my-2"%>
+    </div>
 
-  <div class="field">
-    <% qty = @book.stock %>
-    <%= form.label :quantity %>
-    <%= form.number_field :quantity, :id => 'quantity', required: true, min: 1, max: qty, onchange: "calculateTotalPrice();", class: "form-control my-2"%>
-  </div>
+    <div class="field">
+      <%= form.label :total_cost %>
+      <%= form.text_field :total_price, :id => 'total_cost', required: true, :readonly => true, class: "form-control my-2"%>
+    </div>
 
-  <div class="field">
-    <%= form.label :total_cost %>
-    <%= form.text_field :total_price, :id => 'total_cost', required: true, :readonly => true, class: "form-control my-2"%>
-  </div>
+    <div class="field">
+      <%= form.hidden_field :book_id, value: @book.id %>
+    </div>
 
-  <div class="field">
-    <%= form.hidden_field :book_id, value: @book.id %>
-  </div>
+    <% else %>
+      <p>You are purchasing the order: <%= @order.id %></p>
+      <div class="field">
+        <%= form.label :total_cost %>
+        <%= form.text_field :total_price, :id => 'total_cost', :value=> @order.subtotal,required: true, :readonly => true, class: "form-control my-2"%>
+      </div>
+      <div class="field">
+        <%= form.hidden_field :order_id, value: @order.id %>
+      </div>
+
+
+  <% end %>
 
   <div class="field">
     <%= form.hidden_field :user_id, value: current_user.id %>
@@ -55,8 +68,10 @@
 
 <script type="text/javascript">
     function calculateTotalPrice() {
+        <% if !@book.nil? %>
         var price = "<%= @book.price %>";
         document.getElementById('total_cost').value = document.getElementById('quantity').value * price;
+        <% end %>
     }
 
     function initializeParams(){
