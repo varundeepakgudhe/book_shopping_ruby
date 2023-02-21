@@ -66,3 +66,6 @@
 #### Testing
 Book Model
 `rspec spec/models/book_spec.rb`
+
+Book Controller
+`rspec spec/controllers/books_controller_spec.rb`

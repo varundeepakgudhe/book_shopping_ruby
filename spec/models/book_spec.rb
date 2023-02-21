@@ -37,7 +37,9 @@ RSpec.describe Book, type: :model do
       user = create(:user)
       review1 = create(:review, user: user, book: book, rating: 2)
       review2 = create(:review, user: user, book: book, rating: 2)
-      expect(book.reviews.count).to eq 2
+      review3 = create(:review, user: user, book: book, rating: 2)
+      review4 = create(:review, user: user, book: book, rating: 2)
+      expect(book.reviews.count).to eq 4
     end
   end
 
