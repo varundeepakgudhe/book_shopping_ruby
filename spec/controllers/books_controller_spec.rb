@@ -1,4 +1,11 @@
+require 'rails_helper'
+include AuthHelper
+
 RSpec.describe BooksController, type: :controller do
+  before(:each) do
+    login_user
+  end
+
   describe "GET index" do
     let(:book1) { create(:book, author: "rohit") }
     let(:book2) { create(:book) }
@@ -49,11 +56,11 @@ RSpec.describe BooksController, type: :controller do
       expect(assigns(:reviews).count).to eq 2
     end
   end
-  #
-  # describe "GET new" do
-  #   it "renders new template" do
-  #     get :new
-  #     expect(response).to render_template("new")
-  #   end
-  # end
+
+  describe "GET new" do
+    it "renders new template" do
+      get :new
+      expect(response).to render_template("new")
+    end
+  end
 end
