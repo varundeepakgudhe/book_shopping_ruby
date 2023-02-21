@@ -39,10 +39,20 @@ RSpec.describe Book, type: :model do
   describe "associations" do
     it { should have_many(:reviews).dependent(:destroy) }
     it { should have_many(:transactions).dependent(:destroy) }
-
   end
 
-
+  describe "average rating" do
+    it "should calculate correct average rating" do
+      subject {FactoryBot.build(:book)}
+      user = User.create({name: "fake", email:" fake@gmail.com", username: "fake", password: "long_password1234", password_confirmation:"long_password1234"})
+      user.save
+      p user.id
+      p user.errors
+      Review.create({:rating=> 2, :review => "fake", user_id: user.id, book_id: subject.id})
+      Review.create({:rating=> 2, :review => "fake", user_id: user.id, book_id: subject.id})
+      expect(subject.average_rating).to eq 2
+      end
+    end
 
 end
 

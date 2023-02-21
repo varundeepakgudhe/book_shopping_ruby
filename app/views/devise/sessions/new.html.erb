@@ -1,9 +1,10 @@
+<div class="w-50 mx-auto">
 <div class="form-group mt-4">
   <h2>Log in</h2>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, class: "form-control mb-4", autofocus: true, autocomplete: "email" %>
+      <%= f.label :username %><br />
+      <%= f.text_field :username, class: "form-control mb-4", autofocus: true, autocomplete: "username" %>
     </div>
 
     <div class="field">
@@ -26,3 +27,4 @@
   <%= render "devise/shared/links" %>
 </div>
 
+</div>

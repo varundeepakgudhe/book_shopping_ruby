@@ -16,12 +16,12 @@
   <div class="field">
     <% qty = @book.stock %>
     <%= form.label :quantity %>
-    <%= form.number_field :quantity, :id => 'quantity', min: 1, max: qty, onchange: "calculateTotalPrice();" %>
+    <%= form.number_field :quantity, :id => 'quantity', required: true, min: 1, max: qty, onchange: "calculateTotalPrice();", class: "form-control my-2"%>
   </div>
 
   <div class="field">
     <%= form.label :total_cost %>
-    <%= form.text_field :total_price, :id => 'total_cost', :readonly => true %>
+    <%= form.text_field :total_price, :id => 'total_cost', required: true, :readonly => true, class: "form-control my-2"%>
   </div>
 
   <div class="field">
@@ -33,12 +33,22 @@
   </div>
 
   <div class="field">
-    <%= form.label :credit_card_id, "Credit card number" %>
-    <%= form.collection_select :credit_card_id, User.where(id: current_user.id),:id,:credit_card_number, include_blank: false %>
+    <%= form.label :credit_card, "Credit card number" %>
+    <%= form.text_field :credit_card, required: true, :id => 'credit_card', :readonly => false, class: "form-control my-2"%>
+  </div>
+
+  <div class="field">
+    <%= form.label :phone_number, "Phone Number" %>
+    <%= form.text_field :phone_number, required: true, :id => 'phone_number', :readonly => false, class: "form-control my-2"%>
+  </div>
+
+  <div class="field">
+    <%= form.label :address, "Address" %>
+    <%= form.text_area :address, :id => 'address', required: true, :readonly => false, class: "form-control my-2"%>
   </div>
 
   <div class="actions">
-    <%= form.submit "Complete purchase", data: {turbo: false} %>
+    <%= form.submit "Complete purchase", data: {turbo: false}, class: "btn btn-outline-primary my-4"%>
   </div>
 
 <% end %>
@@ -48,4 +58,15 @@
         var price = "<%= @book.price %>";
         document.getElementById('total_cost').value = document.getElementById('quantity').value * price;
     }
+
+    function initializeParams(){
+        var addr = "<%= current_user.address %>"
+        var phNo = "<%= current_user.phone_number %>"
+        var creditcard = "<%= current_user.credit_card_number %>"
+        document.getElementById('address').value = addr;
+        document.getElementById('credit_card').value = creditcard;
+        document.getElementById('phone_number').value = phNo;
+    }
+
+    initializeParams();
 </script>
