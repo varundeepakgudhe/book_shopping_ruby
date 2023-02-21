@@ -10,6 +10,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 4.5'
+  gem 'faker'
 end
 
 

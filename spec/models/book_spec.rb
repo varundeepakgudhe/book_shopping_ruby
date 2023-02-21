@@ -1,13 +1,5 @@
-# describe Book do
-  # tests go here
-# end
-#
-# $LOAD_PATH.unshift('/Users/varundeepakgudhe/.rvm/gems/ruby-3.0.2/gems/factory_bot_rails-6.2.0/lib/factory_bot_rails.rb
-# ')
-
 require 'rails_helper'
 require 'spec_helper'
-# require '/Users/varundeepakgudhe/.rvm/gems/ruby-3.0.2/gems/factory_bot_rails-6.2.0/lib/factory_bot_rails.rb'
 require 'factory_bot_rails'
 require 'rails_helper'
 
@@ -23,7 +15,7 @@ RSpec.describe Book, type: :model do
   end
 
   describe "validations" do
-    subject {FactoryBot.build(:book)}
+    subject {FactoryBot.create(:book)}
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:author) }
     it { should validate_presence_of(:publisher) }
@@ -43,14 +35,11 @@ RSpec.describe Book, type: :model do
 
   describe "average rating" do
     it "should calculate correct average rating" do
-      subject {FactoryBot.build(:book)}
-      user = User.create({name: "fake", email:" fake@gmail.com", username: "fake", password: "long_password1234", password_confirmation:"long_password1234"})
-      user.save
-      p user.id
-      p user.errors
-      Review.create({:rating=> 2, :review => "fake", user_id: user.id, book_id: subject.id})
-      Review.create({:rating=> 2, :review => "fake", user_id: user.id, book_id: subject.id})
-      expect(subject.average_rating).to eq 2
+      book = create(:book)
+      user = create(:user)
+      review1 = create(:review, user: user, book: book, rating: 2)
+      review2 = create(:review, user: user, book: book, rating: 2)
+      expect(book.average_rating).to eq 2
       end
     end
 

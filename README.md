@@ -63,4 +63,6 @@
 * Create/view/edit/delete reviews
   * Use the `Manage reviews` page.
 
- 
+#### Testing
+Book Model
+`rspec spec/models/book_spec.rb`
