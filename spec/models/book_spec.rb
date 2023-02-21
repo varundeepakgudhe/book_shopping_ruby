@@ -31,6 +31,14 @@ RSpec.describe Book, type: :model do
   describe "associations" do
     it { should have_many(:reviews).dependent(:destroy) }
     it { should have_many(:transactions).dependent(:destroy) }
+
+    it "should count the associated number of reviews correctly" do
+      book = create(:book)
+      user = create(:user)
+      review1 = create(:review, user: user, book: book, rating: 2)
+      review2 = create(:review, user: user, book: book, rating: 2)
+      expect(book.reviews.count).to eq 2
+    end
   end
 
   describe "average rating" do
