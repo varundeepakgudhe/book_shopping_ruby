@@ -1,7 +1,7 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  before_action :is_admin_user?, only: [:edit, :update, :destroy]
+  before_action :is_admin_user?, only: [:show,:edit, :update, :destroy]
 
 
   # GET /transactions or /transactions.json
