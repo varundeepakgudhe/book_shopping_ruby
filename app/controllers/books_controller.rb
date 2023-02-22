@@ -5,6 +5,7 @@ class BooksController < ApplicationController
   # GET /books or /books.json
   def index
     @books = Book.all
+    @order_item = current_order.order_items.new
     if params[:rating] and params[:rating] != ""
       @rating = Integer(params[:rating])
       @books = @books.select{|book| book.average_rating >= @rating}

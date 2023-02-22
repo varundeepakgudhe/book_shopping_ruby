@@ -16,7 +16,7 @@
   * click on `Login` link on the navbar.
 * Edit profile
   * on the home page click on `Edit profile` link.
-  * or click on your email on navbar.
+  * or click on your username on navbar.
 * delete your account
   * go to your edit profile page and click on `cancel my account` at the bottom of the form.
 * View all books on the website
@@ -43,7 +43,8 @@
 #### admin
 
 * Login
-  * click on `Login` link on the navbar. 
+  * click on `Login` link on the navbar.
+  * To login, username:'admin', password: 'goldfish1234'
 * Edit profile
   * Click on `Admin panel` in the navbar
   * click on `edit profile` link.
@@ -69,3 +70,20 @@ Book Model
 
 Book Controller
 `rspec spec/controllers/books_controller_spec.rb`
+
+#### Extra Credits
+
+* Form Prefilling
+  * The forms are prefilled if the user profile is completed. 
+  * To complete the profile, edit the profile to add the attributes.
+
+* Handle Race Conditions
+  * Using pessimistic lock feature of the rails, we are handling race conditions
+
+* Implement Cart-Like Feature
+  * In the books index page, update the quantity field and click on 'Add to Cart' button.
+  * If the book is already in the cart, then 'Go to Cart' button is shown.
+  * To view the cart, click on Cart link in Navbar or click on 'My Personal Cart' at home page.
+  * Click on 'Checkout' button to complete the order purchase.
+  * To complete the purchase, fill the remaining fields in the Purchase page manually, if you have not completed the user profile earlier.
+  * The transaction is complete.

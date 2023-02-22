@@ -1,0 +1,21 @@
+<h2>Personal Cart</h2>
+<h6>(To remove an item, set value to 0 and update)</h6>
+<br>
+<hr>
+<% @order_items.each do |item| %>
+  <h4>Item Name <%= item.book.name %></h4>
+  <h4>Item Price<%= item.book.price %></h4>
+ <div class="my-4">
+   <%= form_with model: item do |f| %>
+     <%= f.hidden_field :book_id, value: item.book.id %>
+     <%= f.number_field :quantity, value: item.quantity.to_i, min: 0, max: item.book.stock, class: "p-1" %>
+     <%= f.submit "Update Cart", class: "btn btn-outline-primary" %>
+     <%#= link_to "Remove Items", item, method: :delete, remote: true %>
+
+   <%end %>
+ </div>
+
+  <h4>Subtotal: <%= item.total %></h4>
+<% end %>
+
+<h3> Current Order has total of <%= current_order.subtotal %></h3>
