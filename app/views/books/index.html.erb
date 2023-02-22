@@ -33,15 +33,26 @@
       <h5>No books Yet!</h5>
     <% end %>
     <% @books.each do |book| %>
+
+    <% flag = 1 %>
       <%= render book %>
       <!--     Adding Cart feature here-->
      <div class="d-flex justify-content-between">
-       <%= form_with model: @order_item do |f| %>
-         <div class="d-flex my-3">
-           <%= f.hidden_field :book_id, value: book.id%>
-           <%= f.number_field :quantity, value: 1, min: 1, max: book.stock, class: "p-2"  %>
-           <%= f.submit "Add to Cart", class: "btn btn-outline-primary mx-2" %>
-         </div>
+       <% current_order.order_items.each do |item| %>
+         <% if item.book_id == book.id %>
+            <% flag = 0 %>
+         <% end %>
+       <% end %>
+       <% if flag == 1 %>
+         <%= form_with model: @order_item do |f| %>
+           <div class="d-flex my-3">
+             <%= f.hidden_field :book_id, value: book.id%>
+             <%= f.number_field :quantity, value: 1, min: 1, max: book.stock, class: "p-2"  %>
+             <%= f.submit "Add to Cart", class: "btn btn-outline-primary mx-2" %>
+           </div>
+         <% end %>
+       <% else %>
+         <%= link_to "Go to Cart", cart_path, class: "btn btn-outline-dark my-2 align-self-center"  %>
        <% end %>
        <%= link_to "Show this book", book, class: "btn btn-outline-dark my-2 align-self-center"  %>
      </div>
