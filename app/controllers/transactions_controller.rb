@@ -38,16 +38,16 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(transaction_params)
     # We create the transaction number using a random string of length 10
     @transaction.transaction_no = Array.new(10){[*"A".."Z", *"0".."9"].sample}.join
+    @transaction.phoneno = params[:transaction][:phone_number]
+    @transaction.creditcard = params[:transaction][:credit_card]
+    @transaction.address = params[:transaction][:address]
+    @transaction.user = current_user
 
     if params[:transaction][:order_id].nil?
       @book = Book.find(params[:transaction][:book_id])
       @book.with_lock do
 
         puts(transaction_params)
-
-
-        # We link the transaction to the current user and their credit card
-        @transaction.user = current_user # insert the correct call to an appropriate function here
 
         # We update the original product quantity
         @remaining_stock = @book.stock - @transaction.quantity
@@ -62,38 +62,47 @@ class TransactionsController < ApplicationController
       end
     else
       @order_items = Order.find(params[:transaction][:order_id]).order_items
-      @transaction.user = current_user # insert the correct call to an appropriate function here
 
       @order_items.each do |item|
         @book = Book.find(item.book.id)
+        @book.with_lock do
+          @transaction1 = Transaction.new
+          @transaction1.transaction_no = Array.new(10){[*"A".."Z", *"0".."9"].sample}.join
+          @transaction1.phoneno = @transaction.phoneno
+          @transaction1.creditcard = params[:transaction][:credit_card]
+          @transaction1.address = params[:transaction][:address]
+          @transaction1.user = current_user
         @remaining_stock = @book.stock - item.quantity
-        if @remaining_stock >= 0
-          @book.stock = @remaining_stock
-          @transaction.book = @book
-          @book.save
+          if @remaining_stock >= 0
+            @book.stock = @remaining_stock
+            @transaction1.book = @book
+            @book.save
+            @transaction1.quantity = item.quantity
+            @transaction1.total_price = item.quantity * @book.price
+          else
+            return redirect_to @book, alert: "You missed it, no stock left."
+          end
+        end
+        if @transaction1.save
+          puts("Transaction Successful !");
         else
-          return redirect_to @book, alert: "You missed it, no stock left."
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @book.errors, status: :unprocessable_entity }
         end
       end
-      @transaction.quantity = @order_items.size
-      #@transaction.book_id = params[:transaction][:order_id]
-      #@transaction.order = current_order
+
     end
 
-    @transaction.phoneno = params[:transaction][:phone_number]
-    @transaction.creditcard = params[:transaction][:credit_card]
-    @transaction.address = params[:transaction][:address]
-
-    if @transaction.save
-      if params[:transaction][:order_id].nil?
+    if params[:transaction][:order_id].nil?
+      if @transaction.save
         redirect_to @book, notice: "Transaction was successfully created."
       else
-        redirect_to cart_path, notice: "Transaction was successfully created."
+        render :new
       end
     else
-      render :new
-
+      redirect_to cart_path, notice: "Transaction was successfully created."
     end
+
 
   end
 

@@ -15,7 +15,7 @@ class OrderItemsController < ApplicationController
     if params[:order_item][:quantity].to_i == 0
       @order_item.destroy
     else
-      if @book.stock > params[:order_item][:quantity].to_i
+      if @book.stock >= params[:order_item][:quantity].to_i
         @order_item.quantity = params[:order_item][:quantity].to_i
         @order_item.total = @order_item.unit_price * params[:order_item][:quantity].to_i
         @order_item.save

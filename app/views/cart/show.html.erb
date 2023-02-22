@@ -1,6 +1,6 @@
 <div id="cart-item">
 
   <%= render 'cart_items' %>
-  <%= link_to_if current_order.order_items.size > 0, 'Purchase this book', new_transaction_path(:order_id => current_order.id), class: "btn btn-outline-primary my-2 mx-2" %>
+  <%= link_to_if current_order.order_items.size > 0, 'Purchase the order', new_transaction_path(:order_id => current_order.id), class: "btn btn-outline-primary my-2 mx-2" %>
 </div>
 <hr>
