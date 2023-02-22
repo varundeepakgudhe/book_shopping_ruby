@@ -35,12 +35,16 @@
     <% @books.each do |book| %>
       <%= render book %>
       <!--     Adding Cart feature here-->
-      <%= form_with model: @order_item do |f| %>
-        <%= f.hidden_field :book_id, value: book.id %>
-        <%= f.number_field :quantity, value: 1, min: 1, max: book.stock %>
-        <%= f.submit "Add to Cart" %>
-      <% end %>
-      <%= link_to "Show this book", book, class: "btn btn-outline-dark my-2" %>
+     <div class="d-flex justify-content-between">
+       <%= form_with model: @order_item do |f| %>
+         <div class="d-flex my-3">
+           <%= f.hidden_field :book_id, value: book.id%>
+           <%= f.number_field :quantity, value: 1, min: 1, max: book.stock, class: "p-2"  %>
+           <%= f.submit "Add to Cart", class: "btn btn-outline-primary mx-2" %>
+         </div>
+       <% end %>
+       <%= link_to "Show this book", book, class: "btn btn-outline-dark my-2 align-self-center"  %>
+     </div>
     <% end %>
 
 

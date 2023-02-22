@@ -6,6 +6,7 @@ class OrderItemsController < ApplicationController
     @order_item = @order.order_items.new(order_params)
     @order.save
     session[:order_id] = @order.id
+    flash[:notice] = "added to cart"
   end
 
   def update

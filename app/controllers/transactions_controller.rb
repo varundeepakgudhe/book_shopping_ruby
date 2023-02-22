@@ -44,6 +44,7 @@ class TransactionsController < ApplicationController
     @transaction.user = current_user
 
     if params[:transaction][:order_id].nil?
+      # buy it now option
       @book = Book.find(params[:transaction][:book_id])
       @book.with_lock do
 
@@ -61,6 +62,7 @@ class TransactionsController < ApplicationController
 
       end
     else
+      # Cart option
       @order_items = Order.find(params[:transaction][:order_id]).order_items
 
       @order_items.each do |item|
@@ -80,7 +82,7 @@ class TransactionsController < ApplicationController
             @transaction1.quantity = item.quantity
             @transaction1.total_price = item.quantity * @book.price
           else
-            return redirect_to @book, alert: "You missed it, no stock left."
+            return redirect_to @book, alert: "Transaction failed for #{@book.name}. Out of stock!"
           end
         end
         if @transaction1.save
