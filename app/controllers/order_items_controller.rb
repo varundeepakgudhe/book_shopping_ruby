@@ -6,7 +6,7 @@ class OrderItemsController < ApplicationController
     @order_item = @order.order_items.new(order_params)
     @order.save
     session[:order_id] = @order.id
-    flash[:notice] = "added to cart"
+    redirect_to books_path
   end
 
   def update
@@ -15,11 +15,13 @@ class OrderItemsController < ApplicationController
 
     if params[:order_item][:quantity].to_i == 0
       @order_item.destroy
+      redirect_to cart_path, notice: "item removed successfully"
     else
       if @book.stock >= params[:order_item][:quantity].to_i
         @order_item.quantity = params[:order_item][:quantity].to_i
         @order_item.total = @order_item.unit_price * params[:order_item][:quantity].to_i
         @order_item.save
+        redirect_to cart_path, notice: "item updated successfully"
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @order_item.errors, status: :unprocessable_entity }
