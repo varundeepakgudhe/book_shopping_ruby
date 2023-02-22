@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, :except => [:index, :show ]
+  before_action :authenticate_user!
   before_action :is_admin_user?, only: [:edit, :create, :new, :update, :destroy]
   # GET /books or /books.json
   def index
