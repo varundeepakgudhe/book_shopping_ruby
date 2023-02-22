@@ -85,6 +85,7 @@ class TransactionsController < ApplicationController
         end
         if @transaction1.save
           puts("Transaction Successful !");
+          item.destroy
         else
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @book.errors, status: :unprocessable_entity }
